@@ -14,6 +14,18 @@ a {
     color: inherit;
 }
 
+html,
+body {
+    width: 100%;
+    height: 100%;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    font-family: 'Inter';
+}
+
 /* Header */
 header {
     width: 100%;
@@ -47,7 +59,7 @@ header h1 {
 }
 
 header nav {
-    padding-left: 80px;
+    padding-left: 40px;
     width: 100%;
     height: 35px;
     background-color: #212121;
@@ -63,4 +75,157 @@ header ul {
     display: flex;
     gap: 20px;
     align-items: center;
+}
+
+/* Main */
+main {
+    width: 100%;
+    padding-top: 20px;
+    padding-bottom: 50px;
+    display: flex;
+    flex-direction: column;
+}
+
+main .search {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    height: 30px;
+}
+
+main .search .cont-pesquisa {
+    height: 35px;
+    background-color: #d9d9d9;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+main .search .filtro {
+    appearance: none;
+    color: #85629F;
+    height: 100%;
+    display: flex;
+    text-align: center;
+    font-weight: bold;
+    font-size: 1rem;
+    border: none;
+    outline: none;
+    background-color: inherit;
+    border-right: 0.5px solid black;
+}
+
+main .search .barra {
+    height: 100%;
+    width: 400px;
+    background-color: inherit;
+    border: none;
+    outline: none;
+    font-size: 18px;
+}
+
+
+/* Hero do Main */
+main .container {
+    padding-top: 50px;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    padding-left: 20%;
+    padding-right: 20%;
+    flex-wrap: wrap;
+}
+
+main .container img {
+    height: 100px;
+    width: 100px;
+}
+
+
+.poke {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 250px;
+    height: 250px;
+    background-color: #d9d9d9;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+    padding-top: 20px;
+    padding-bottom: 20px;
+    border-radius: 10px;
+}
+
+.poke:hover{
+    transform: scale(1.1);
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.2); 
+}
+
+.poke .image {
+    background-color: #fff;
+    border: 1px solid #32D94B;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 160px;
+    width: 160px;
+}
+
+.poke .infos {
+    display: flex;
+    flex-direction: column;
+    padding-top: 10px;
+    padding-left: 49px;
+    width: 100%;
+    align-items: start;
+    gap: 5px;
+}
+
+.poke .infos .id {
+    font-family: 'Inter';
+    font-weight: bold;
+    font-size: 12px;
+}
+.poke .infos .nome{
+    font-family: 'Inter';
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.poke .tipos {
+    display: flex;
+    gap: 10px;
+}
+
+.poke .tipos .tipo {
+    font-family: 'Inter';
+    font-weight: bold;
+    color: #fff;
+    border: 1px solid white;
+    border-radius: 10px;
+    padding: 3px;
+    background-color: #32D94B;
+}
+
+/* Footer */
+footer {
+    width: 100%;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #85629F;
+    color: white;
+    font-family: 'Inter';
+    font-weight: bold;
+
+    p{
+        padding-top: 30px;
+        padding-bottom: 10px;
+    }
 }
