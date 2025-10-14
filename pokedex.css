@@ -1,0 +1,66 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+ul,
+ol {
+    list-style: none;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* Header */
+header {
+    width: 100%;
+    height: 180px;
+    display: flex;
+    flex-direction: column;
+    font-family: 'Inter';
+    background-color: #85629F;
+}
+
+header .header-top {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
+
+header img {
+    height: 150px;
+    width: 150px;
+}
+
+header .gliscor2 {
+    height: 120px;
+    width: 170px;
+}
+
+header h1 {
+    color: white;
+    font-size: 2rem;
+}
+
+header nav {
+    padding-left: 80px;
+    width: 100%;
+    height: 35px;
+    background-color: #212121;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: white;
+    font-family: 'Inter';
+    font-weight: bold;
+}
+
+header ul {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
