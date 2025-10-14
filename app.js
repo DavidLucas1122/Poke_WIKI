@@ -1,11 +1,10 @@
-
+'use strict'
 
 const container = document.getElementById('list.container')
 let listaPokemon = []
 
-async function carregarPokemons(pokemon) {
-    console.log('teste')
-    const url = 'https://pokeapi.co/api/v2/pokemon?limit=151'
+async function carregarPokemons() {
+    const url = `https://pokeapi.co/api/v2/pokemon/?limit=151`
     const response = await fetch(url)
     const dados = await response.json()
 
@@ -26,16 +25,34 @@ async function carregarPokemons(pokemon) {
     mostrarPokemons(listaPokemon)
 }
 
-//Deixar a primeira letra maiúscula
-function capitalize(str) {
-    if (!str) return ''
-    return str.charAt(0).toUpperCase() + str.slice(1)
-}
+//Buscar
+async function carregarPokemonsPosBusca() {
+    const p = document.getElementById('input').value.toLowerCase()
+    const url = `https://pokeapi.co/api/v2/pokemon/${p}`
+    const response = await fetch(url)
+    const dados = await response.json()
 
+    console.log(dados)
+    //p = pokémon
+        const pokemon = {
+            id: dados.id,
+            nome: dados.name,
+            imagem: dados.sprites.front_default,
+            tipos: dados.types.map(t => t.type.name)
+        }
+        listaPokemon = [pokemon]
+        mostrarPokemons(listaPokemon)
+    }
 
-
-
-
+//Botão
+const botao = document.getElementById('buscar')
+botao.addEventListener('click', carregarPokemonsPosBusca)
+//Enter
+document.getElementById("input").addEventListener("keydown", function(event) {
+    if (event.key === "Enter") {
+        carregarPokemonsPosBusca()
+    }
+})
 
 
 function mostrarPokemons(lista) {
@@ -63,7 +80,8 @@ function mostrarPokemons(lista) {
         id.classList.add('id')
         nome.textContent = pokemon.nome
         nome.textContent = capitalize(pokemon.nome)
-        id.textContent = `${pokemon.id}`
+
+        id.textContent = String(pokemon.id).padStart(3, '0')
 
 
 
@@ -76,9 +94,9 @@ function mostrarPokemons(lista) {
             tipoDiv.textContent = tipo
             tipoDiv.textContent = capitalize(tipo)
             tiposContainer.appendChild(tipoDiv)
-
-            image.classList.add('image', tipo.toLowerCase())
         })
+        image.classList.add('image', pokemon.tipos[0].toLowerCase())
+
 
 
         divInfos.append(id, nome, tiposContainer)
@@ -86,6 +104,12 @@ function mostrarPokemons(lista) {
         card.append(image, divInfos)
         container.appendChild(card)
     });
+}
+
+//Deixar a primeira letra maiúscula
+function capitalize(str) {
+    if (!str) return ''
+    return str.charAt(0).toUpperCase() + str.slice(1)
 }
 
 carregarPokemons()

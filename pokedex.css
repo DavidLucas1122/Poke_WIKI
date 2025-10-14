@@ -4,6 +4,10 @@
     box-sizing: border-box;
 }
 
+:root {
+    --cor-primaria: #85629F;
+}
+
 ul,
 ol {
     list-style: none;
@@ -32,8 +36,7 @@ header {
     height: 180px;
     display: flex;
     flex-direction: column;
-    font-family: 'Inter';
-    background-color: #85629F;
+    background-color: var(--cor-primaria);
 }
 
 header .header-top {
@@ -55,7 +58,7 @@ header .gliscor2 {
 
 header h1 {
     color: white;
-    font-size: 2rem;
+    font-size: 3rem;
 }
 
 header nav {
@@ -67,7 +70,6 @@ header nav {
     align-items: center;
     gap: 20px;
     color: white;
-    font-family: 'Inter';
     font-weight: bold;
 }
 
@@ -104,7 +106,7 @@ main .search .cont-pesquisa {
 
 main .search select {
     appearance: none;
-    color: #85629F;
+    color: var(--cor-primaria);
     height: 100%;
     display: flex;
     text-align: center;
@@ -126,8 +128,15 @@ main .search input {
 }
 
 main .search button{
-
+    height: 100%;
+    width: 90px;
+    border: none;
+    background-color: var(--cor-primaria);
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
 }
+
 
 /* Hero do Main */
 main .container {
@@ -137,8 +146,8 @@ main .container {
     display: flex;
     justify-content: center;
     gap: 40px;
-    padding-left: 20%;
-    padding-right: 20%;
+    padding-left: 10%;
+    padding-right: 10%;
     flex-wrap: wrap;
 }
 
@@ -193,12 +202,10 @@ main .container img {
 }
 
 .poke .infos .id {
-    font-family: 'Inter';
     font-weight: bold;
     font-size: 12px;
 }
 .poke .infos .nome{
-    font-family: 'Inter';
     font-weight: bold;
     font-size: 16px;
 }
@@ -214,7 +221,6 @@ main .container img {
     font-size: 15px;
     align-items: center;
     justify-content: center;
-    font-family: 'Inter';
     font-weight: bold;
     color: #fff;
     border: 1px solid white;
@@ -230,9 +236,8 @@ footer {
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: #85629F;
+    background-color: var(--cor-primaria);
     color: white;
-    font-family: 'Inter';
     font-weight: bold;
 
     p{
@@ -240,7 +245,6 @@ footer {
         padding-bottom: 30px;
     }
 }
-
 
 
 
@@ -266,7 +270,7 @@ footer {
 .normal { background-color: #A8A878; }
 .steel { background-color: #B8B8D0; }
 
-/* color */
+/* border */
 .fire { border: 2px solid #F08030; }
 .water { border: 2px solid #6890F0; }
 .grass { border: 2px solid #78C850; }
