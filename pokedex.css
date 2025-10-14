@@ -65,7 +65,7 @@ header nav {
     background-color: #212121;
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 20px;
     color: white;
     font-family: 'Inter';
     font-weight: bold;
@@ -102,7 +102,7 @@ main .search .cont-pesquisa {
     gap: 10px;
 }
 
-main .search .filtro {
+main .search select {
     appearance: none;
     color: #85629F;
     height: 100%;
@@ -116,7 +116,7 @@ main .search .filtro {
     border-right: 0.5px solid black;
 }
 
-main .search .barra {
+main .search input {
     height: 100%;
     width: 400px;
     background-color: inherit;
@@ -125,6 +125,9 @@ main .search .barra {
     font-size: 18px;
 }
 
+main .search button{
+
+}
 
 /* Hero do Main */
 main .container {
@@ -167,13 +170,16 @@ main .container img {
 
 .poke .image {
     background-color: #fff;
-    border: 1px solid #32D94B;
     border-radius: 10px;
     display: flex;
     align-items: center;
     justify-content: center;
     height: 160px;
     width: 160px;
+}
+.poke .image img{
+    height: 150px;
+    width: 150px;
 }
 
 .poke .infos {
@@ -203,14 +209,19 @@ main .container img {
 }
 
 .poke .tipos .tipo {
+    display: flex;
+    height: 25px;
+    font-size: 15px;
+    align-items: center;
+    justify-content: center;
     font-family: 'Inter';
     font-weight: bold;
     color: #fff;
     border: 1px solid white;
     border-radius: 10px;
-    padding: 3px;
-    background-color: #32D94B;
+    padding: 5px;
 }
+
 
 /* Footer */
 footer {
@@ -226,6 +237,51 @@ footer {
 
     p{
         padding-top: 30px;
-        padding-bottom: 10px;
+        padding-bottom: 30px;
     }
 }
+
+
+
+
+
+/* CORES DINÂMICAS */
+/* background */
+.fire { background-color: #F08030; }
+.water { background-color: #6890F0; }
+.grass { background-color: #78C850; }
+.electric { background-color: #F8D030; }
+.ice { background-color: #98D8D8; }
+.fighting { background-color: #C03028; }
+.poison { background-color: #A040A0; }
+.ground { background-color: #E0C068; }
+.flying { background-color: #A890F0; }
+.psychic { background-color: #F85888; }
+.bug { background-color: #A8B820; }
+.rock { background-color: #B8A038; }
+.ghost { background-color: #705898; }
+.dragon { background-color: #7038F8; }
+.dark { background-color: #705848; }
+.fairy { background-color: #EE99AC; }
+.normal { background-color: #A8A878; }
+.steel { background-color: #B8B8D0; }
+
+/* color */
+.fire { border: 2px solid #F08030; }
+.water { border: 2px solid #6890F0; }
+.grass { border: 2px solid #78C850; }
+.electric { border: 2px solid #F8D030; }
+.ice { border: 2px solid #98D8D8; }
+.fighting { border: 2px solid #C03028; }
+.poison { border: 2px solid #A040A0; }
+.ground { border: 2px solid #E0C068; }
+.flying { border: 2px solid #A890F0; }
+.psychic { border: 2px solid #F85888; }
+.bug { border: 2px solid #A8B820; }
+.rock { border: 2px solid #B8A038; }
+.ghost { border: 2px solid #705898; }
+.dragon { border: 2px solid #7038F8; }
+.dark { border: 2px solid #705848; }
+.fairy { border: 2px solid #EE99AC; }
+.normal { border: 2px solid #A8A878; }
+.steel { border: 2px solid #B8B8D0; }
