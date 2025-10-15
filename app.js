@@ -1,8 +1,11 @@
 'use strict'
 
 const container = document.getElementById('list.container')
+const input = document.getElementById('input')
+const sugestoes = document.getElementById('sugestoes')
 let listaPokemon = []
 
+//Trazer dados
 async function carregarPokemons() {
     const url = `https://pokeapi.co/api/v2/pokemon/?limit=151`
     const response = await fetch(url)
@@ -25,15 +28,26 @@ async function carregarPokemons() {
     mostrarPokemons(listaPokemon)
 }
 
-//Buscar
+
+//Trazer dados para a busca
 async function carregarPokemonsPosBusca() {
-    const p = document.getElementById('input').value.toLowerCase()
+    const p = document.getElementById('input').value.toLowerCase().trim().replace(/\s+/g, '')
     const url = `https://pokeapi.co/api/v2/pokemon/${p}`
     const response = await fetch(url)
-    const dados = await response.json()
 
-    console.log(dados)
     //p = pokémon
+    if (p == "") {
+        carregarPokemons()
+    }
+    else if (response.status === 404) {
+        container.innerHTML =`
+        <div class="erro-pokemon">
+            Pokémon não encontrado!
+        </div>
+    `
+    }
+    else {
+        const dados = await response.json()
         const pokemon = {
             id: dados.id,
             nome: dados.name,
@@ -43,18 +57,20 @@ async function carregarPokemonsPosBusca() {
         listaPokemon = [pokemon]
         mostrarPokemons(listaPokemon)
     }
+}
 
-//Botão
+//Pesquisar com o Botão
 const botao = document.getElementById('buscar')
 botao.addEventListener('click', carregarPokemonsPosBusca)
-//Enter
-document.getElementById("input").addEventListener("keydown", function(event) {
+//Pesquisar com Enter
+document.getElementById("input").addEventListener("keydown", function (event) {
     if (event.key === "Enter") {
         carregarPokemonsPosBusca()
     }
 })
 
 
+//Mostrar Pokemons
 function mostrarPokemons(lista) {
     container.replaceChildren()
 
