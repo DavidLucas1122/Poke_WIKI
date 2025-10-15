@@ -1,8 +1,7 @@
 'use strict'
 
+//Elementos do HTML
 const container = document.getElementById('list.container')
-const input = document.getElementById('input')
-const sugestoes = document.getElementById('sugestoes')
 let listaPokemon = []
 
 //Trazer dados
@@ -28,10 +27,47 @@ async function carregarPokemons() {
     mostrarPokemons(listaPokemon)
 }
 
+//Sugestão de busca
+async function sugestoesBarra() {
+    const input = document.getElementById('input')
+    const listaSugestoes = document.createElement('ul')
+    listaSugestoes.classList.add('sugestoes')
+    input.parentNode.appendChild(listaSugestoes)
+
+    let pokemons = []
+    const response = await fetch(`https://pokeapi.co/api/v2/pokemon/?limit=1025`)
+    const dados = await response.json()
+    pokemons = dados.results.map(p => p.name)
+
+    input.addEventListener('input', () => {
+        const p = document.getElementById('input').value.toLowerCase().trim().replace(/\s+/g, '')
+        listaSugestoes.innerHTML = ''
+        if (p.length === 0) {
+            return
+        }
+        const filtrados = pokemons.filter(nome => nome.startsWith(p)).slice(0, 8)
+
+        filtrados.forEach(nome => {
+            const item = document.createElement('li')
+            item.textContent = capitalize(nome)
+            item.addEventListener('click', () => {
+                input.value = nome
+                listaSugestoes.innerHTML = ""
+                carregarPokemonsPosBusca()
+            })
+            listaSugestoes.appendChild(item)
+        })
+    })
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+    sugestoesBarra()
+})
 
 //Trazer dados para a busca
 async function carregarPokemonsPosBusca() {
     const p = document.getElementById('input').value.toLowerCase().trim().replace(/\s+/g, '')
+
     const url = `https://pokeapi.co/api/v2/pokemon/${p}`
     const response = await fetch(url)
 
@@ -40,7 +76,7 @@ async function carregarPokemonsPosBusca() {
         carregarPokemons()
     }
     else if (response.status === 404) {
-        container.innerHTML =`
+        container.innerHTML = `
         <div class="erro-pokemon">
             Pokémon não encontrado!
         </div>
