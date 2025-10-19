@@ -108,6 +108,8 @@ main .search .filtro {
     appearance: none;
     color: var(--cor-primaria);
     height: 100%;
+    padding-right: 5px;
+    padding-left: 5px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -119,6 +121,8 @@ main .search .filtro {
     background-color: inherit;
     border-right: 0.5px solid black;
 }
+
+
 main .search .geracao {
     appearance: none;
     color: var(--cor-primaria);
@@ -155,6 +159,9 @@ main .search button{
     cursor: pointer;
 }
 
+main .search .geracao{
+    display: none;
+}
 
 /* Hero do Main */
 main .container {
@@ -291,24 +298,24 @@ footer {
 .steel { background-color: #B8B8D0; }
 
 /* border */
-.fire { border: 2px solid #F08030; }
-.water { border: 2px solid #6890F0; }
-.grass { border: 2px solid #78C850; }
-.electric { border: 2px solid #F8D030; }
-.ice { border: 2px solid #98D8D8; }
-.fighting { border: 2px solid #C03028; }
-.poison { border: 2px solid #A040A0; }
-.ground { border: 2px solid #E0C068; }
-.flying { border: 2px solid #A890F0; }
-.psychic { border: 2px solid #F85888; }
-.bug { border: 2px solid #A8B820; }
-.rock { border: 2px solid #B8A038; }
-.ghost { border: 2px solid #705898; }
-.dragon { border: 2px solid #7038F8; }
-.dark { border: 2px solid #705848; }
-.fairy { border: 2px solid #EE99AC; }
-.normal { border: 2px solid #A8A878; }
-.steel { border: 2px solid #B8B8D0; }
+.fire { border: 3px solid #F08030; }
+.water { border: 3px solid #6890F0; }
+.grass { border: 3px solid #78C850; }
+.electric { border: 3px solid #F8D030; }
+.ice { border: 3px solid #98D8D8; }
+.fighting { border: 3px solid #C03028; }
+.poison { border: 3px solid #A040A0; }
+.ground { border: 3px solid #E0C068; }
+.flying { border: 3px solid #A890F0; }
+.psychic { border: 3px solid #F85888; }
+.bug { border: 3px solid #A8B820; }
+.rock { border: 3px solid #B8A038; }
+.ghost { border: 3px solid #705898; }
+.dragon { border: 3px solid #7038F8; }
+.dark { border: 3px solid #705848; }
+.fairy { border: 3px solid #EE99AC; }
+.normal { border: 3px solid #A8A878; }
+.steel { border: 3px solid #B8B8D0; }
 
 /* Pokémon não encontrado */
 .erro-pokemon {
@@ -333,14 +340,14 @@ footer {
     position: absolute;
     top: 130%;
     width: 200px;
-    background-color: #3b3b3b;
     max-height: 200px;
-    color: white;
+    color: var(--cor-primaria);
     overflow-y: auto;
     padding: 0;
     margin: 0;
     list-style: none;
     z-index: 1000;
+    background-color: #d9d9d9;
 }
 
 .sugestoes li {
@@ -348,8 +355,10 @@ footer {
     cursor: pointer;
     border-top: 1px solid white;
     font-weight: bold;
+    transform: scale(1);
 }
 
 .sugestoes li:hover {
-    background-color: #515151;
+    background-color: var(--cor-primaria);
+    color: white;
 }

@@ -3,8 +3,8 @@
 // Elementos do HTML
 const container = document.getElementById('list.container')
 const botao = document.getElementById('buscar')
-const combo = document.getElementById('comboGeracao')
 const barra = document.getElementById('input')
+const combo = document.getElementById('comboGeracao')
 let listaPokemon = []
 
 
@@ -35,7 +35,7 @@ const traducaoTipos = {
     fairy: "Fada"
 }
 
-const tipoInverso = Object.fromEntries(
+const tipoTraduzido = Object.fromEntries(
     Object.entries(traducaoTipos).map(([en, pt]) => [pt.toLowerCase(), en])
 )
 
@@ -62,11 +62,13 @@ async function carregarPokemons() {
 
 //Busca, Filtragem e Pesquisa
 function LeitorFiltro() {
-    window.addEventListener('DOMContentLoaded', () => {
         const select = document.getElementById('filtro')
-        
         // chamar ao mudar a opção
         select.addEventListener('change', () => {
+            barra.value = '' // limpa o texto digitado
+            const listaSugestoes = document.querySelector('.sugestoes')
+            if (listaSugestoes) listaSugestoes.innerHTML = '' // limpa as sugestões
+
             if (select.value == 'Nome') {
                 BuscarPokemonNome()
                 barra.style.display = 'inline-block'
@@ -81,8 +83,8 @@ function LeitorFiltro() {
                 combo.style.display = 'inline-block'
             }
         })
-    })
-}
+    }
+
 
 
 
@@ -114,13 +116,16 @@ async function BuscarPokemonNome() {
 
 async function BuscarPokemonTipo() {
     const entrada = document.getElementById('input').value.toLowerCase().trim().replace(/\s+/g, '')
-    const p = tipoInverso[entrada] || entrada
+    //Garantir que o código funcione tanto se o usuário digitar o tipo em português quanto em inglês.
+    const p = tipoTraduzido[entrada] || entrada
     const url = `https://pokeapi.co/api/v2/pokemon/?limit=1025`
     const response = await fetch(url)
     const dados = await response.json()
 
-    if (p === "") {
+
+    if (p == "") {
         carregarPokemons()
+
     } else {
         const pokemonFiltrados = await Promise.all(
             dados.results.map(async (t) => {
@@ -148,50 +153,45 @@ async function BuscarPokemonTipo() {
     }
 
 }
-
-
-
 async function BuscarPokemonGeracao() {
     const p = document.getElementById('comboGeracao')
     const url = `https://pokeapi.co/api/v2/pokemon/?limit=1025`
     const response = await fetch(url)
     const dados = await response.json()
 
-    if (p.value === "") {
-        carregarPokemons()
-    } else {
-        const pokemonFiltrados = await Promise.all(
-            dados.results.map(async (g) => {
-                const resp = await fetch(g.url)
-                const info = await resp.json()
 
-                const speciesResp = await fetch(info.species.url)
-                const species = await speciesResp.json()
 
-                return {
-                    id: info.id,
-                    nome: info.name,
-                    imagem: info.sprites.front_default,
-                    tipos: info.types.map(t => t.type.name),
-                    generation: species.generation.name
-                }
-            })
-        )
-        
-        const resultado = pokemonFiltrados.filter(g => g.generation === p.value)
+    const pokemonFiltrados = await Promise.all(
+        dados.results.map(async (g) => {
+            const resp = await fetch(g.url)
+            const info = await resp.json()
+            const speciesResp = await fetch(info.species.url)
+            const species = await speciesResp.json()
 
-        if (resultado.length === 0) {
-            container.innerHTML = `
+            return {
+                id: info.id,
+                nome: info.name,
+                imagem: info.sprites.front_default,
+                tipos: info.types.map(t => t.type.name),
+                generation: species.generation.name
+            }
+        })
+    )
+
+    const resultado = pokemonFiltrados.filter(g => g.generation === p.value)
+
+    if (resultado.length === 0) {
+        container.innerHTML = `
             <div class="erro-pokemon">
                 Geração não encontrada!
             </div>
         `
-        } else {
-            mostrarPokemons(resultado)
-        }
+    } else {
+        mostrarPokemons(resultado)
     }
 }
 
+document.getElementById('comboGeracao').addEventListener('change', BuscarPokemonGeracao)
 
 
 
@@ -202,29 +202,75 @@ async function sugestoesBarra() {
     const listaSugestoes = document.createElement('ul')
     listaSugestoes.classList.add('sugestoes')
     input.parentNode.appendChild(listaSugestoes)
-
+    const select = document.getElementById('filtro')
     const response = await fetch(`https://pokeapi.co/api/v2/pokemon/?limit=1025`)
     const dados = await response.json()
     const pokemons = dados.results.map(p => p.name)
+    const tipos = {
+        normal: "Normal",
+        fogo: "Fogo",
+        agua: "Água",
+        eletrico: "Elétrico",
+        grama: "Grama",
+        gelo: "Gelo",
+        lutador: "Lutador",
+        veneno: "Venenoso",
+        terrestre: "Terra",
+        voador: "Voador",
+        psiquico: "Psíquico",
+        inseto: "Inseto",
+        pedra: "Pedra",
+        fantasma: "Fantasma",
+        dragao: "Dragão",
+        sombrio: "Sombrio",
+        aco: "Aço",
+        fada: "Fada"
+    }
+
 
     input.addEventListener('input', () => {
         const p = input.value.toLowerCase().trim().replace(/\s+/g, '')
         listaSugestoes.innerHTML = ''
-        if (p.length === 0) return
 
-        const filtrados = pokemons.filter(nome => nome.startsWith(p)).slice(0)
-        filtrados.forEach(nome => {
-            const item = document.createElement('li')
-            item.textContent = capitalize(nome)
-            item.addEventListener('click', () => {
-                input.value = nome
-                listaSugestoes.innerHTML = ""
-                BuscarPokemonNome(select.value)
+        if (select.value == 'Nome') {
+            listaSugestoes.innerHTML = ''
+            const filtrados = pokemons.filter(nome => nome.startsWith(p))
+            filtrados.forEach(nome => {
+                const item = document.createElement('li')
+                item.textContent = capitalize(nome)
+                item.addEventListener('click', () => {
+                    input.value = nome
+                    listaSugestoes.innerHTML = ""
+                    BuscarPokemonNome()
+                })
+                listaSugestoes.appendChild(item)
             })
-            listaSugestoes.appendChild(item)
-        })
+        } else if (select.value == 'Tipo') {
+            listaSugestoes.innerHTML = ''
+            const tiposFiltrados = Object.values(tipos).filter(tipo => tipo.toLowerCase().startsWith(p))
+            tiposFiltrados.forEach(tipo => {
+                const item = document.createElement('li')
+                item.textContent = tipo
+                item.addEventListener('click', () => {
+                    input.value = tipo
+                    listaSugestoes.innerHTML = ""
+                    BuscarPokemonTipo()
+                })
+                listaSugestoes.appendChild(item)
+            })
+        }
+        else {
+            listaSugestoes.style.display = 'inline-block'
+        }
+    })
+    document.addEventListener('click', (event) => {
+        if (!input.contains(event.target) && !listaSugestoes.contains(event.target)) {
+            listaSugestoes.innerHTML = ''
+        }
     })
 }
+
+
 
 
 // Mostrar Pokemons
@@ -276,19 +322,19 @@ botao.addEventListener('click', () => {
         BuscarPokemonNome()
     } else if (select === 'Tipo') {
         BuscarPokemonTipo()
-    } else {
+    } else if (select === 'Geração') {
         BuscarPokemonGeracao()
     }
 })
 
-document.getElementById("input").addEventListener("keydown", function (event) {
+input.addEventListener("keydown", function (event) {
     if (event.key === "Enter") {
         const select = document.getElementById('filtro').value
         if (select === 'Nome') {
             BuscarPokemonNome()
         } else if (select === 'Tipo') {
             BuscarPokemonTipo()
-        } else {
+        } else if (select === 'Geração') {
             BuscarPokemonGeracao()
         }
     }
@@ -298,7 +344,6 @@ document.getElementById("input").addEventListener("keydown", function (event) {
 window.addEventListener('DOMContentLoaded', () => {
     sugestoesBarra()
 })
-
 
 
 
