@@ -104,11 +104,13 @@ main .search .cont-pesquisa {
     gap: 10px;
 }
 
-main .search select {
+main .search .filtro {
     appearance: none;
     color: var(--cor-primaria);
     height: 100%;
     display: flex;
+    justify-content: center;
+    align-items: center;
     text-align: center;
     font-weight: bold;
     font-size: 1rem;
@@ -117,6 +119,22 @@ main .search select {
     background-color: inherit;
     border-right: 0.5px solid black;
 }
+main .search .geracao {
+    appearance: none;
+    color: var(--cor-primaria);
+    height: 100%;
+    width: 300px;
+    display: flex;
+    padding: 10px;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    font-size: 1rem;
+    border: none;
+    outline: none;
+    background-color: inherit;
+}
+
 
 main .search input {
     height: 100%;
@@ -221,7 +239,9 @@ main .container img {
     font-size: 15px;
     align-items: center;
     justify-content: center;
+    text-align: center;
     font-weight: bold;
+    padding: 10px;
     color: #fff;
     border: 1px solid white;
     border-radius: 10px;
@@ -312,8 +332,9 @@ footer {
 .sugestoes {
     position: absolute;
     top: 130%;
-    width: 410px;
+    width: 200px;
     background-color: #3b3b3b;
+    max-height: 200px;
     color: white;
     overflow-y: auto;
     padding: 0;

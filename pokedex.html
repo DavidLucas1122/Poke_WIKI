@@ -31,13 +31,24 @@
     <main>
         <div class="search">
             <div class="cont-pesquisa">
-                <select name="filtro" id="filtro">
+                <select class="filtro" name="filtro" id="filtro">
                     <option value="Nome">Nome</option>
                     <option value="Tipo">Tipo</option>
                     <option value="Geração">Geração</option>
                 </select>
                 <div class="input-container">
                     <input id="input">
+                    <select class="geracao" id="comboGeracao" style="display:none;">
+                        <option value="generation-i">1ª Geração</option>
+                        <option value="generation-ii" >2ª Geração</option>
+                        <option value="generation-iii">3ª Geração</option>
+                        <option value="generation-iv">4ª Geração</option>
+                        <option value="generation-v">5ª Geração</option>
+                        <option value="generation-vi">6ª Geração</option>
+                        <option value="generation-vii">7ª Geração</option>
+                        <option value="generation-viii">8ª Geração</option>
+                        <option value="generation-ix">9ª Geração</option>
+                    </select>
                 </div>
                 <button id="buscar">BUSCAR</button>
             </div>
