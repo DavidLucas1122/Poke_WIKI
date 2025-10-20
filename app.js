@@ -62,28 +62,28 @@ async function carregarPokemons() {
 
 //Busca, Filtragem e Pesquisa
 function LeitorFiltro() {
-        const select = document.getElementById('filtro')
-        // chamar ao mudar a opção
-        select.addEventListener('change', () => {
-            barra.value = '' // limpa o texto digitado
-            const listaSugestoes = document.querySelector('.sugestoes')
-            if (listaSugestoes) listaSugestoes.innerHTML = '' // limpa as sugestões
+    const select = document.getElementById('filtro')
+    // chamar ao mudar a opção
+    select.addEventListener('change', () => {
+        barra.value = '' // limpa o texto digitado
+        const listaSugestoes = document.querySelector('.sugestoes')
+        if (listaSugestoes) listaSugestoes.innerHTML = '' // limpa as sugestões
 
-            if (select.value == 'Nome') {
-                BuscarPokemonNome()
-                barra.style.display = 'inline-block'
-                combo.style.display = 'none'
-            } else if (select.value == 'Tipo') {
-                BuscarPokemonTipo()
-                barra.style.display = 'inline-block'
-                combo.style.display = 'none'
-            } else {
-                BuscarPokemonGeracao()
-                barra.style.display = 'none'
-                combo.style.display = 'inline-block'
-            }
-        })
-    }
+        if (select.value == 'Nome') {
+            BuscarPokemonNome()
+            barra.style.display = 'inline-block'
+            combo.style.display = 'none'
+        } else if (select.value == 'Tipo') {
+            BuscarPokemonTipo()
+            barra.style.display = 'inline-block'
+            combo.style.display = 'none'
+        } else {
+            BuscarPokemonGeracao()
+            barra.style.display = 'none'
+            combo.style.display = 'inline-block'
+        }
+    })
+}
 
 
 
@@ -206,26 +206,6 @@ async function sugestoesBarra() {
     const response = await fetch(`https://pokeapi.co/api/v2/pokemon/?limit=1025`)
     const dados = await response.json()
     const pokemons = dados.results.map(p => p.name)
-    const tipos = {
-        normal: "Normal",
-        fogo: "Fogo",
-        agua: "Água",
-        eletrico: "Elétrico",
-        grama: "Grama",
-        gelo: "Gelo",
-        lutador: "Lutador",
-        veneno: "Venenoso",
-        terrestre: "Terra",
-        voador: "Voador",
-        psiquico: "Psíquico",
-        inseto: "Inseto",
-        pedra: "Pedra",
-        fantasma: "Fantasma",
-        dragao: "Dragão",
-        sombrio: "Sombrio",
-        aco: "Aço",
-        fada: "Fada"
-    }
 
 
     input.addEventListener('input', () => {
@@ -247,7 +227,7 @@ async function sugestoesBarra() {
             })
         } else if (select.value == 'Tipo') {
             listaSugestoes.innerHTML = ''
-            const tiposFiltrados = Object.values(tipos).filter(tipo => tipo.toLowerCase().startsWith(p))
+            const tiposFiltrados = Object.values(traducaoTipos).filter(tipo => tipo.toLowerCase().startsWith(p))
             tiposFiltrados.forEach(tipo => {
                 const item = document.createElement('li')
                 item.textContent = tipo
@@ -278,7 +258,11 @@ function mostrarPokemons(lista) {
     container.replaceChildren()
 
     lista.forEach(pokemon => {
+        const link = document.createElement('a')
         const card = document.createElement('div')
+
+        link.href = `detalhes.html?nome=${pokemon.nome}`
+
         card.classList.add('poke')
 
         const image = document.createElement('div')
@@ -309,7 +293,8 @@ function mostrarPokemons(lista) {
 
         divInfos.append(id, nome, tiposContainer)
         card.append(image, divInfos)
-        container.appendChild(card)
+        link.append(card)
+        container.appendChild(link)
     })
 }
 
@@ -351,3 +336,45 @@ window.addEventListener('DOMContentLoaded', () => {
 // Inicialização
 carregarPokemons()
 LeitorFiltro()
+
+
+
+
+//Após Clicar em Pokémon
+async function carregarInfos(nomeId) {
+    const url = `https://pokeapi.co/api/v2/pokemon/${nomeId}`
+
+    const response = await fetch(url)
+    const dados = await response.json()
+
+    const promises = dados.results.map(async (p) => {
+        const resp = await fetch(p.url)
+        const info = await resp.json()
+
+        //Outro Fetch, pois as infos que preciso então dentros de outra url
+        const speciesResp = await fetch(`https://pokeapi.co/api/v2/pokemon-species/${info.id}`)
+        const speciesData = await speciesResp.json()
+
+        const descricao =
+            speciesData.flavor_text_entries.find(e => e.language.name === 'pt')?.flavor_text ||
+            speciesData.flavor_text_entries.find(e => e.language.name === 'en')?.flavor_text
+
+        return {
+            id: info.id,
+            nome: info.name,
+            imagem: info.sprites.front_default,
+            tipos: info.types.map(t => t.type.name),
+            altura: info.height / 10,
+            peso: info.weight / 10,
+            status: info.stats.map(s => ({ nome: s.stat.name, valor: s.base_stat })),
+            habilidades: info.abilities.map(a => a.ability.name),
+            descricao: descricao.resplace(/\n|\f/g, ' ')
+        }
+    })
+    listaInfos = await Promise.all(promises)
+    mostrarInfos(listaInfos)
+}
+async function mostrarInfos(pokemon) {
+    const nome = document.getElementById('nome')
+    return nome
+}

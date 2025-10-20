@@ -163,4 +163,8 @@ footer{
     color: white;
     font-family: 'Inter';
     font-weight: bold;
+
+    p{
+        padding: 30px;
+    }
 }
