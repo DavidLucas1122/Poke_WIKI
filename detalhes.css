@@ -123,8 +123,9 @@ main .pokemon .shiny{
 main .pokemon .brilho{
     cursor: pointer;
     height: 30px;
+    width: 30px;
 }
-main .pokemon .poke{
+main .pokemon .foto{
     height: 400px;
     width: 400px;
     background-color: #fff;

@@ -10,6 +10,7 @@
         href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="detalhes.css">
+    <script src="./detalhes.js" type="module"></script>
     <title>PokeWIKI</title>
 </head>
 
@@ -28,20 +29,24 @@
         </nav>
     </header>
 
-    
-    <main>
-        <h2 id="nome"></h2>
+
+    <main id="main">
+        <!-- <h2 id="nome"></h2> -->
         <div class="poke_statistic">
-            <div class="pokemon">
-                <div class="shiny">
-                    <img class="brilho" id="brilho" src="./img/stars.png" alt="">
+            <div id="pokemonDiv" class="pokemon_div">
+                <div class="pokemon">
+                    <div class="shiny">
+                        <img class="brilho" id="brilho" src="./img/stars.png" alt="">
+                    </div>
+                    <div class="foto"></div>
                 </div>
-                <img class="poke" id="img">
             </div>
-            <div class="tipos" id="tipo"></div>
+            <div class="tipos" id="tipos_info"></div>
             <div class="statistic">
                 <h2>Estatísticas</h2>
-                <div class="stats"></div>
+                <div class="stats" id="stats">
+
+                </div>
             </div>
         </div>
         <div class="desc_skills">

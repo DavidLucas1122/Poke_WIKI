@@ -40,24 +40,31 @@ const tipoTraduzido = Object.fromEntries(
 )
 
 // Funções para carregar dados
-async function carregarPokemons() {
-    const url = `https://pokeapi.co/api/v2/pokemon/?limit=151`
-    const response = await fetch(url)
-    const dados = await response.json()
+async function carregarPokemons(limite = 20) {
+    const url = `https://pokeapi.co/api/v2/pokemon/?limit=151`;
+    const response = await fetch(url);
+    const dados = await response.json();
 
-    const promises = dados.results.map(async (p) => {
-        const resp = await fetch(p.url)
-        const info = await resp.json()
-        return {
-            id: info.id,
-            nome: info.name,
-            imagem: info.sprites.front_default,
-            tipos: info.types.map(t => t.type.name)
+    listaPokemon = [];
+
+    // Carrega os Pokémon em lotes de 'limite' unidades
+    for (let i = 0; i < dados.results.length; i += limite) {
+        const lote = dados.results.slice(i, i + limite);
+
+        for (const p of lote) {
+            const resp = await fetch(p.url);
+            const info = await resp.json();
+            listaPokemon.push({
+                id: info.id,
+                nome: info.name,
+                imagem: info.sprites.front_default,
+                tipos: info.types.map(t => t.type.name)
+            });
         }
-    })
 
-    listaPokemon = await Promise.all(promises)
-    mostrarPokemons(listaPokemon)
+        // Mostra os Pokémon carregados até agora (opcional: melhora UX)
+        mostrarPokemons(listaPokemon);
+    }
 }
 
 //Busca, Filtragem e Pesquisa
@@ -261,7 +268,7 @@ function mostrarPokemons(lista) {
         const link = document.createElement('a')
         const card = document.createElement('div')
 
-        link.href = `detalhes.html?nome=${pokemon.nome}`
+        link.href = `detalhes.html?nome=${pokemon.nome.toLowerCase()}`
 
         card.classList.add('poke')
 
@@ -336,45 +343,3 @@ window.addEventListener('DOMContentLoaded', () => {
 // Inicialização
 carregarPokemons()
 LeitorFiltro()
-
-
-
-
-//Após Clicar em Pokémon
-async function carregarInfos(nomeId) {
-    const url = `https://pokeapi.co/api/v2/pokemon/${nomeId}`
-
-    const response = await fetch(url)
-    const dados = await response.json()
-
-    const promises = dados.results.map(async (p) => {
-        const resp = await fetch(p.url)
-        const info = await resp.json()
-
-        //Outro Fetch, pois as infos que preciso então dentros de outra url
-        const speciesResp = await fetch(`https://pokeapi.co/api/v2/pokemon-species/${info.id}`)
-        const speciesData = await speciesResp.json()
-
-        const descricao =
-            speciesData.flavor_text_entries.find(e => e.language.name === 'pt')?.flavor_text ||
-            speciesData.flavor_text_entries.find(e => e.language.name === 'en')?.flavor_text
-
-        return {
-            id: info.id,
-            nome: info.name,
-            imagem: info.sprites.front_default,
-            tipos: info.types.map(t => t.type.name),
-            altura: info.height / 10,
-            peso: info.weight / 10,
-            status: info.stats.map(s => ({ nome: s.stat.name, valor: s.base_stat })),
-            habilidades: info.abilities.map(a => a.ability.name),
-            descricao: descricao.resplace(/\n|\f/g, ' ')
-        }
-    })
-    listaInfos = await Promise.all(promises)
-    mostrarInfos(listaInfos)
-}
-async function mostrarInfos(pokemon) {
-    const nome = document.getElementById('nome')
-    return nome
-}
