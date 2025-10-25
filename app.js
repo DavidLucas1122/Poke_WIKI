@@ -39,33 +39,50 @@ const tipoTraduzido = Object.fromEntries(
     Object.entries(traducaoTipos).map(([en, pt]) => [pt.toLowerCase(), en])
 )
 
-// Funções para carregar dados
-async function carregarPokemons(limite = 20) {
-    const url = `https://pokeapi.co/api/v2/pokemon/?limit=151`;
-    const response = await fetch(url);
-    const dados = await response.json();
 
-    listaPokemon = [];
+
+
+
+
+// Funções para carregar dados
+async function carregarPokemons(limite = 5) {
+    const url = `https://pokeapi.co/api/v2/pokemon/?limit=151`;
+    const response = await fetch(url)
+    const dados = await response.json()
+
+
+    listaPokemon = []
+
+    container.replaceChildren()
+
 
     // Carrega os Pokémon em lotes de 'limite' unidades
     for (let i = 0; i < dados.results.length; i += limite) {
-        const lote = dados.results.slice(i, i + limite);
+        const lote = dados.results.slice(i, i + limite)
 
-        for (const p of lote) {
-            const resp = await fetch(p.url);
-            const info = await resp.json();
-            listaPokemon.push({
-                id: info.id,
-                nome: info.name,
-                imagem: info.sprites.front_default,
-                tipos: info.types.map(t => t.type.name)
-            });
-        }
+        const promises = lote.map(p => fetch(p.url).then(resp => resp.json()))
+        const pokemons = await Promise.all(promises)
 
-        // Mostra os Pokémon carregados até agora (opcional: melhora UX)
-        mostrarPokemons(listaPokemon);
+        const dadosFinais = pokemons.map(info => ({
+            id: info.id,
+            nome: info.name,
+            imagem: info.sprites.front_default,
+            tipos: info.types.map(t => t.type.name)
+        }))
+
+        //... pra mesclar arrays, mantendo a estrutura de listaPokemon
+        listaPokemon.push(...dadosFinais)
+        mostrarPokemons(listaPokemon)
     }
 }
+
+
+
+
+
+
+
+
 
 //Busca, Filtragem e Pesquisa
 function LeitorFiltro() {
@@ -123,20 +140,24 @@ async function BuscarPokemonNome() {
 
 async function BuscarPokemonTipo() {
     const entrada = document.getElementById('input').value.toLowerCase().trim().replace(/\s+/g, '')
-    //Garantir que o código funcione tanto se o usuário digitar o tipo em português quanto em inglês.
-    const p = tipoTraduzido[entrada] || entrada
-    const url = `https://pokeapi.co/api/v2/pokemon/?limit=1025`
-    const response = await fetch(url)
-    const dados = await response.json()
 
-
-    if (p == "") {
+    if (entrada == "") {
         carregarPokemons()
+        return
+    }
 
-    } else {
+    else {
+        //Garantir que o código funcione tanto se o usuário digitar o tipo em português quanto em inglês.
+        const p = tipoTraduzido[entrada] || entrada
+        const url = `https://pokeapi.co/api/v2/type/${p}`
+        const response = await fetch(url)
+        const dados = await response.json()
+
+        console.log(dados)
+
         const pokemonFiltrados = await Promise.all(
-            dados.results.map(async (t) => {
-                const resp = await fetch(t.url)
+            dados.pokemon.map(async (p) => {
+                const resp = await fetch(p.pokemon.url)
                 const info = await resp.json()
                 return {
                     id: info.id,
@@ -146,55 +167,54 @@ async function BuscarPokemonTipo() {
                 }
             })
         )
-        const tipoU = pokemonFiltrados.filter(t => t.tipos.includes(p))
-        mostrarPokemons(tipoU)
-        if (tipoU.length === 0) {
+        if (pokemonFiltrados.length === 0) {
             container.innerHTML = `
             <div class="erro-pokemon">
                 Tipo não encontrado!
             </div>
         `
         } else {
-            mostrarPokemons(tipoU)
+            mostrarPokemons(pokemonFiltrados)
         }
     }
-
 }
+
 async function BuscarPokemonGeracao() {
-    const p = document.getElementById('comboGeracao')
-    const url = `https://pokeapi.co/api/v2/pokemon/?limit=1025`
+    const p = document.getElementById('comboGeracao').value
+    const url = `https://pokeapi.co/api/v2/generation/${p}`
     const response = await fetch(url)
     const dados = await response.json()
-
-
+    listaPokemon = []
 
     const pokemonFiltrados = await Promise.all(
-        dados.results.map(async (g) => {
-            const resp = await fetch(g.url)
+        dados.pokemon_species.map(async (species) => {
+            const resp = await fetch(`https://pokeapi.co/api/v2/pokemon/${species.name}`)
+            if (!resp.ok) return null
             const info = await resp.json()
-            const speciesResp = await fetch(info.species.url)
-            const species = await speciesResp.json()
-
+            console.log(info)
             return {
                 id: info.id,
                 nome: info.name,
                 imagem: info.sprites.front_default,
-                tipos: info.types.map(t => t.type.name),
-                generation: species.generation.name
+                tipos: info.types.map(t => t.type.name)
             }
         })
     )
 
-    const resultado = pokemonFiltrados.filter(g => g.generation === p.value)
+    const pokemonValidados = pokemonFiltrados.filter(p => p !== null);
+    pokemonValidados.sort((a, b) => a.id - b.id);
 
-    if (resultado.length === 0) {
+    listaPokemon = pokemonValidados;
+    pokemonValidados.sort((a, b) => a.id - b.id)
+
+    if (pokemonValidados.length === 0) {
         container.innerHTML = `
             <div class="erro-pokemon">
                 Geração não encontrada!
             </div>
         `
     } else {
-        mostrarPokemons(resultado)
+        mostrarPokemons(listaPokemon)
     }
 }
 
@@ -269,15 +289,16 @@ function mostrarPokemons(lista) {
         const card = document.createElement('div')
 
         link.href = `detalhes.html?nome=${pokemon.nome.toLowerCase()}`
-
         card.classList.add('poke')
 
+        // imagem com lazy loading
         const image = document.createElement('div')
         const img = document.createElement('img')
         img.src = pokemon.imagem
         image.appendChild(img)
         image.classList.add('image', pokemon.tipos[0].toLowerCase())
 
+        // infos
         const divInfos = document.createElement('div')
         divInfos.classList.add('infos')
 
@@ -289,6 +310,7 @@ function mostrarPokemons(lista) {
         id.classList.add('id')
         id.textContent = String(pokemon.id).padStart(3, '0')
 
+        // tipos
         const tiposContainer = document.createElement('div')
         tiposContainer.classList.add('tipos')
         pokemon.tipos.forEach(tipo => {
@@ -343,3 +365,6 @@ window.addEventListener('DOMContentLoaded', () => {
 // Inicialização
 carregarPokemons()
 LeitorFiltro()
+
+
+//Endpoints de tipos: https://pokeapi.co/api/v2/type/fire
