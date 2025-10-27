@@ -91,20 +91,20 @@ main {
 
 main .poke_statistic,
 main .desc_skills {
-    width: 850px;
+    width: 900px;
 }
 
 
-main .h2{
+main .nome {
     font-size: 2rem;
 }
 
-main .poke_statistic{
+main .poke_statistic {
     display: flex;
     gap: 40px;
 }
 
-main .pokemon{
+main .pokemon {
     display: flex;
     padding: 10px;
     flex-direction: column;
@@ -114,51 +114,87 @@ main .pokemon{
     width: 500px;
     background-color: #d9d9d9;
 }
-main .pokemon .shiny{
+
+main .pokemon .shiny {
     width: 100%;
     display: flex;
     justify-content: end;
     align-items: end;
 }
-main .pokemon .brilho{
+
+main .pokemon .brilho {
     cursor: pointer;
     height: 30px;
     width: 30px;
 }
-main .pokemon .foto{
+
+main .pokemon .foto {
     height: 400px;
     width: 400px;
     background-color: #fff;
-    border: 1px solid black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+main .pokemon_div{
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
 }
 
-main .statistic{
+main .pokemon .foto img {
+    height: 380px;
+    width: 380px;
+}
+
+main .statistic {
     width: 300px;
     height: 200px;
     background-color: #d9d9d9;
     padding-top: 10px;
     padding-left: 20px;
+    padding-right: 20px;
     gap: 10px;
 }
-main .statistic h2{
-    font-size: 1.2rem;
+
+main .tipos{
+    display: flex;
+    gap: 10px;
+
 }
-main .statistic .stats{
+main .tipos .tipo {
+    display: flex;
+    height: 35px;
+    width: 100px;
+    font-size: 15px;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-weight: bold;
+    padding: 10px;
+    color: #fff;
+    border: 1px solid white;
+    border-radius: 10px;
+    padding: 5px;
+}
+
+main .statistic .stats {
     height: 150px;
     width: 250px;
     background-color: #fff;
-    border: 1px solid black;
+    border: 4px solid black;
+    padding-top: 5px;
+    padding-bottom: 5px;
 }
 
 
 
 main .desc_skills {
     display: flex;
-
-    gap: 80px;
+    gap: 40px;
 }
 
-main .div_descricao{
+main .div_descricao {
     display: flex;
     flex-direction: column;
     background-color: #d9d9d9;
@@ -168,27 +204,43 @@ main .div_descricao{
     padding-left: 20px;
 }
 
-main .div_descricao .infos{
+main .div_descricao .infos {
     background-color: #fff;
     width: 420px;
     height: 140px;
-    border: 1px solid black;
+    border: 4px solid black;
+    padding-left: 20px;
+    padding-top: 10px;
+        font-size: 0.9rem;
+        font-weight: 500;
 }
 
-main .habilidades{
+main .div_descricao .desc{
+    width: 25rem;
+    overflow-wrap: break-word;
+    padding-bottom: 10px;
+    padding-right: 10px;
+}
+
+main .div_descricao .peso_alt{
+    font-weight: 700;
+}
+
+main .habilidades {
     width: 300px;
     height: 200px;
     background-color: #d9d9d9;
     padding-top: 10px;
     padding-left: 20px;
+    padding-right: 20px;
     gap: 10px;
 }
 
-main .div_habil{
+main .div_habil {
     height: 150px;
     width: 250px;
     background-color: #fff;
-    border: 1px solid black;
+    border: 4px solid black;
 }
 
 footer {
@@ -202,8 +254,90 @@ footer {
     font-weight: bold;
     text-align: center;
 
-    p{
+    p {
 
         padding: 30px;
     }
+}
+
+
+
+/* CORES DINÂMICAS */
+/* background */
+.fire { background-color: #F08030; }
+.water { background-color: #6890F0; }
+.grass { background-color: #78C850; }
+.electric { background-color: #F8D030; }
+.ice { background-color: #98D8D8; }
+.fighting { background-color: #C03028; }
+.poison { background-color: #A040A0; }
+.ground { background-color: #E0C068; }
+.flying { background-color: #A890F0; }
+.psychic { background-color: #F85888; }
+.bug { background-color: #A8B820; }
+.rock { background-color: #B8A038; }
+.ghost { background-color: #705898; }
+.dragon { background-color: #7038F8; }
+.dark { background-color: #705848; }
+.fairy { background-color: #EE99AC; }
+.normal { background-color: #A8A878; }
+.steel { background-color: #B8B8D0; }
+
+/* border */
+.fire { border: 4px solid #F08030; }
+.water { border: 4px solid #6890F0; }
+.grass { border: 4px solid #78C850; }
+.electric { border: 4px solid #F8D030; }
+.ice { border: 4px solid #98D8D8; }
+.fighting { border: 4px solid #C03028; }
+.poison { border: 4px solid #A040A0; }
+.ground { border: 4px solid #E0C068; }
+.flying { border: 4px solid #A890F0; }
+.psychic { border: 4px solid #F85888; }
+.bug { border: 4px solid #A8B820; }
+.rock { border: 4px solid #B8A038; }
+.ghost { border: 4px solid #705898; }
+.dragon { border: 4px solid #7038F8; }
+.dark { border: 4px solid #705848; }
+.fairy { border: 4px solid #EE99AC; }
+.normal { border: 4px solid #A8A878; }
+.steel { border: 4px solid #B8B8D0; }
+
+
+main .stats{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.stat {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.stats .nome{
+    font-size: 1.1rem;
+    font-weight: bold;
+    font-family: 'Inter';
+}
+
+.barra {
+  background-color: #d9d9d9;
+  width: 190px;
+  height: 13px;
+  border-radius: 5px;
+}
+
+.valor {
+  background-color: #4caf50;
+  height: 100%;
+  text-align: right;
+  font-size: 12px;
+  color: #fff;
+  padding-bottom: 3px;
+  padding-right: 4px;
+  border-radius: 5px;
 }

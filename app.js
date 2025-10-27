@@ -44,39 +44,102 @@ const tipoTraduzido = Object.fromEntries(
 
 
 
-// Funções para carregar dados
-async function carregarPokemons(limite = 5) {
-    const url = `https://pokeapi.co/api/v2/pokemon/?limit=151`;
-    const response = await fetch(url)
-    const dados = await response.json()
+// // Funções para carregar dados
+// async function carregarPokemons(limite = 5) {
+//     const url = `https://pokeapi.co/api/v2/pokemon/?limit=150`
+//     const response = await fetch(url)
+//     const dados = await response.json()
+
+//     container.replaceChildren()
 
 
-    listaPokemon = []
+//     // Carrega os Pokémon em lotes de 'limite' unidades
+//     for (let i = 0; i < dados.results.length; i += limite) {
+//         const lote = dados.results.slice(i, i + limite)
 
-    container.replaceChildren()
+//         const promises = lote.map(p => fetch(p.url).then(resp => resp.json()))
+//         const pokemons = await Promise.all(promises)
 
+//         const dadosFinais = pokemons.map(info => ({
+//             id: info.id,
+//             nome: info.name,
+//             imagem: info.sprites.front_default,
+//             tipos: info.types.map(t => t.type.name)
+//         }))
 
-    // Carrega os Pokémon em lotes de 'limite' unidades
-    for (let i = 0; i < dados.results.length; i += limite) {
-        const lote = dados.results.slice(i, i + limite)
-
-        const promises = lote.map(p => fetch(p.url).then(resp => resp.json()))
-        const pokemons = await Promise.all(promises)
-
-        const dadosFinais = pokemons.map(info => ({
-            id: info.id,
-            nome: info.name,
-            imagem: info.sprites.front_default,
-            tipos: info.types.map(t => t.type.name)
-        }))
-
-        //... pra mesclar arrays, mantendo a estrutura de listaPokemon
-        listaPokemon.push(...dadosFinais)
-        mostrarPokemons(listaPokemon)
-    }
-}
+//         //... pra mesclar arrays, mantendo a estrutura de listaPokemon
+//         listaPokemon.push(...dadosFinais)
+//         mostrarPokemons(listaPokemon)
+//     }
+// }
 
 
+//Primeira Versão
+// async function carregarPokemons() {
+//     console.log('teste')
+//     const url = 'https://pokeapi.co/api/v2/pokemon?limit=151'
+//     const response = await fetch(url)
+//     const dados = await response.json()
+
+//     //p = pokémon
+//     const promises = dados.results.map(async (p) => {
+//         const resp = await fetch(p.url)
+//         const info = await resp.json()
+
+//         return {
+//             id: info.id,
+//             nome: info.name,
+//             imagem: info.sprites.front_default,
+//             tipos: info.types.map(t => t.type.name)
+//         }
+//     })
+
+//     listaPokemon = await Promise.all(promises)
+//     mostrarPokemons(listaPokemon)
+// }
+
+// //Tentativa com scroll
+// let offset = 0
+// const limite = 10 
+// const maxPokemon = 150
+// let carregando = false 
+
+// // Funções para carregar dados
+// async function carregarPokemons() {
+//     if (offset >= maxPokemon || carregando) return
+//     carregando = true
+
+//     // Delay inicial
+//     await new Promise(res => setTimeout(res, 1000)) // espera X segundos antes de começar
+
+//     const limiteAtual = Math.min(limite, maxPokemon - offset)
+//     const url = `https://pokeapi.co/api/v2/pokemon?offset=${offset}&limit=${limiteAtual}`
+//     const response = await fetch(url)
+//     const dados = await response.json()
+
+//     const promises = dados.results.map(p => fetch(p.url).then(resp => resp.json()))
+//     const pokemons = await Promise.all(promises)
+
+//     const dadosFinais = pokemons.map(info => ({
+//         id: info.id,
+//         nome: info.name,
+//         imagem: info.sprites.front_default,
+//         tipos: info.types.map(t => t.type.name)
+//     }))
+
+//     //... para mesclar arrays e manter a estrutura de listaPokemon
+//     listaPokemon.push(...dadosFinais)
+//     mostrarPokemons(listaPokemon)
+
+//     offset += limiteAtual
+//     carregando = false
+// }
+
+// window.addEventListener('scroll', () => {
+//     if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 100) {
+//         carregarPokemons()
+//     }
+// })
 
 
 
@@ -195,8 +258,8 @@ async function BuscarPokemonGeracao() {
             return {
                 id: info.id,
                 nome: info.name,
-                imagem: info.sprites.front_default,
-                tipos: info.types.map(t => t.type.name)
+                imagem: await info.sprites.front_default,
+                tipos: await info.types.map(t => t.type.name)
             }
         })
     )
@@ -329,7 +392,7 @@ function mostrarPokemons(lista) {
 
 
 
-// Event listeners
+// eventListeners
 botao.addEventListener('click', () => {
     const select = document.getElementById('filtro').value
     if (select === 'Nome') {
@@ -359,10 +422,6 @@ window.addEventListener('DOMContentLoaded', () => {
     sugestoesBarra()
 })
 
-
-
-
-// Inicialização
 carregarPokemons()
 LeitorFiltro()
 

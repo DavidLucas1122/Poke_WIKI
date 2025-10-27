@@ -30,32 +30,33 @@
     </header>
 
 
-    <main id="main">
-        <!-- <h2 id="nome"></h2> -->
+    <main>
+        <h2 id="nome" class="nome"></h2>
         <div class="poke_statistic">
             <div id="pokemonDiv" class="pokemon_div">
-                <div class="pokemon">
+                <div id="poke" class="pokemon">
                     <div class="shiny">
-                        <img class="brilho" id="brilho" src="./img/stars.png" alt="">
+                        <img class="brilho" id="shiny" src="./img/stars.png" alt="">
                     </div>
-                    <div class="foto"></div>
+                    <div id="foto" class="foto"></div>
                 </div>
+                <div class="tipos" id="tipos_info"></div>
             </div>
-            <div class="tipos" id="tipos_info"></div>
+
             <div class="statistic">
                 <h2>Estatísticas</h2>
-                <div class="stats" id="stats">
-
-                </div>
+                <div class="stats" id="stats"></div>
             </div>
         </div>
         <div class="desc_skills">
             <div class="div_descricao">
                 <h2>Descrição</h2>
                 <div class="infos">
-                    <p id="descricao"></p>
-                    <p id="peso"></p>
-                    <p id="altura"></p>
+                    <p class="desc" id="descricao"></p>
+                    <div class="peso_alt">
+                        <p id="peso"></p>
+                        <p id="altura"></p>
+                    </div>
                 </div>
             </div>
             <div class="habilidades">
