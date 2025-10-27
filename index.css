@@ -116,14 +116,14 @@ main button {
 }
 
 main img {
-    height: 350px;
-    width: 400px;
+    height: 21rem;
+    width: 25rem;
 }
 
 main .hero {
     display: flex;
     align-items: center;
-    gap: 10%;
+    gap: 5%;
 }
 
 main .apresentation{
@@ -166,5 +166,82 @@ footer{
 
     p{
         padding: 30px;
+    }
+}
+
+@media (max-width: 1200px) {
+    main{
+        padding-right: 50px;
+    }
+    main .text h2 {
+        font-size: 5rem;
+        color: #85629F;
+        font-family: 'Inter';
+    }
+
+    
+    main .text p {
+        font-family: 'Inter';
+        font-weight: bold;
+        font-size: 1.2rem;
+    }
+    
+    main img {
+        height: 18rem;
+        width: 22rem;
+    }
+
+    main .hero {
+        display: flex;
+        align-items: center;
+        gap: 10%;
+    }
+}
+
+@media (max-width: 880px) {
+
+    main {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        padding-top: 50px;
+        gap: 40px;
+        padding-left: 40px;
+        padding-right: 40px;
+        padding-bottom: 100px;
+    }
+    main .text h2 {
+        font-size: 4rem;
+        color: #85629F;
+        font-family: 'Inter';
+    }
+
+    main img {
+        height: 12rem;
+        width: 18rem;
+    }
+    
+    main .text p {
+        font-family: 'Inter';
+        font-weight: bold;
+        font-size: 1rem;
+    }
+    
+    main .hero {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    main .apresentation p{
+        display: flex;
+        align-items: center;
+        height: 180px;
+        background-color: #d9d9d9;
+        font-size: 0.8rem;
+        line-height: 1.5;
+        padding-left: 10px;
+        font-family: 'Inter';
+        font-weight: bold;
     }
 }

@@ -23,7 +23,7 @@ const abreviacoes = {
 
 
 
-//Após Clicar em Pokémon
+//Após Clicar em um Pokémon
 async function carregarInfos(nomeId) {
     const url = `https://pokeapi.co/api/v2/pokemon/${nomeId}`
     const response = await fetch(url)
@@ -66,6 +66,9 @@ function mostrarInfos(pokemon) {
     const descricao = document.getElementById("descricao")
     const peso = document.getElementById("peso")
     const altura = document.getElementById("altura")
+    const habil1 = document.getElementById("habil1")
+    const habil2 = document.getElementById("habil2")
+    const habil3 = document.getElementById("habil3")
 
     foto.className = `foto ${pokemon.tipos[0].toLowerCase()}` //Puxar cores para borda
 
@@ -94,7 +97,7 @@ function mostrarInfos(pokemon) {
         linha.classList.add('stat')
 
         const nome = document.createElement('p')
-        nome.textContent = abreviacoes[s.nome.toLowerCase()] || capitalize(s.nome)
+        nome.textContent = abreviacoes[s.nome.toLowerCase()]
         nome.classList.add('nome')
 
         const barra = document.createElement('div')
@@ -102,7 +105,7 @@ function mostrarInfos(pokemon) {
 
         const valor = document.createElement('div')
         valor.classList.add('valor')
-        valor.style.width = `${(s.valor / 255) * 100}%`
+        valor.style.width = `${(s.valor / 250) * 100}%`
         valor.textContent = s.valor
 
         barra.appendChild(valor)
@@ -114,5 +117,13 @@ function mostrarInfos(pokemon) {
     descricao.textContent = pokemon.descricao
     peso.textContent = `Peso: ${pokemon.peso} kg`
     altura.textContent = `Altura: ${pokemon.altura} m`
+    console.log(pokemon.habilidades)
+    habil1.textContent = `Habilidade 1: ${capitalize(pokemon.habilidades[0])}`
+    if(pokemon.habilidades[1] == null)
+        return
+    habil2.textContent = `Habilidade 2: ${capitalize(pokemon.habilidades[1])}`
+    if(pokemon.habilidades[2] == null)
+        return
+    habil3.textContent = `Habilidade 3: ${capitalize(pokemon.habilidades[2])}`
 }
 

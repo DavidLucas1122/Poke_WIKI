@@ -44,9 +44,9 @@ const tipoTraduzido = Object.fromEntries(
 
 
 
-// // Funções para carregar dados
+// Funções para carregar dados (separando em lotes de 5 em 5)
 async function carregarPokemons(limite = 5) {
-    const url = `https://pokeapi.co/api/v2/pokemon/?limit=150`
+    const url = `https://pokeapi.co/api/v2/pokemon/?limit=151`
     const response = await fetch(url)
     const dados = await response.json()
 
@@ -74,79 +74,6 @@ async function carregarPokemons(limite = 5) {
 }
 
 
-//Primeira Versão
-// async function carregarPokemons() {
-//     console.log('teste')
-//     const url = 'https://pokeapi.co/api/v2/pokemon?limit=151'
-//     const response = await fetch(url)
-//     const dados = await response.json()
-
-//     //p = pokémon
-//     const promises = dados.results.map(async (p) => {
-//         const resp = await fetch(p.url)
-//         const info = await resp.json()
-
-//         return {
-//             id: info.id,
-//             nome: info.name,
-//             imagem: info.sprites.front_default,
-//             tipos: info.types.map(t => t.type.name)
-//         }
-//     })
-
-//     listaPokemon = await Promise.all(promises)
-//     mostrarPokemons(listaPokemon)
-// }
-
-// //Tentativa com scroll
-// let offset = 0
-// const limite = 10 
-// const maxPokemon = 150
-// let carregando = false 
-
-// // Funções para carregar dados
-// async function carregarPokemons() {
-//     if (offset >= maxPokemon || carregando) return
-//     carregando = true
-
-//     // Delay inicial
-//     await new Promise(res => setTimeout(res, 1000)) // espera X segundos antes de começar
-
-//     const limiteAtual = Math.min(limite, maxPokemon - offset)
-//     const url = `https://pokeapi.co/api/v2/pokemon?offset=${offset}&limit=${limiteAtual}`
-//     const response = await fetch(url)
-//     const dados = await response.json()
-
-//     const promises = dados.results.map(p => fetch(p.url).then(resp => resp.json()))
-//     const pokemons = await Promise.all(promises)
-
-//     const dadosFinais = pokemons.map(info => ({
-//         id: info.id,
-//         nome: info.name,
-//         imagem: info.sprites.front_default,
-//         tipos: info.types.map(t => t.type.name)
-//     }))
-
-//     //... para mesclar arrays e manter a estrutura de listaPokemon
-//     listaPokemon.push(...dadosFinais)
-//     mostrarPokemons(listaPokemon)
-
-//     offset += limiteAtual
-//     carregando = false
-// }
-
-// window.addEventListener('scroll', () => {
-//     if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 100) {
-//         carregarPokemons()
-//     }
-// })
-
-
-
-
-
-
-
 //Busca, Filtragem e Pesquisa
 function LeitorFiltro() {
     const select = document.getElementById('filtro')
@@ -160,6 +87,7 @@ function LeitorFiltro() {
             BuscarPokemonNome()
             barra.style.display = 'inline-block'
             combo.style.display = 'none'
+            
         } else if (select.value == 'Tipo') {
             BuscarPokemonTipo()
             barra.style.display = 'inline-block'
@@ -254,7 +182,6 @@ async function BuscarPokemonGeracao() {
             const resp = await fetch(`https://pokeapi.co/api/v2/pokemon/${species.name}`)
             if (!resp.ok) return null
             const info = await resp.json()
-            console.log(info)
             return {
                 id: info.id,
                 nome: info.name,
