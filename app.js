@@ -45,33 +45,33 @@ const tipoTraduzido = Object.fromEntries(
 
 
 // // Funções para carregar dados
-// async function carregarPokemons(limite = 5) {
-//     const url = `https://pokeapi.co/api/v2/pokemon/?limit=150`
-//     const response = await fetch(url)
-//     const dados = await response.json()
+async function carregarPokemons(limite = 5) {
+    const url = `https://pokeapi.co/api/v2/pokemon/?limit=150`
+    const response = await fetch(url)
+    const dados = await response.json()
 
-//     container.replaceChildren()
+    container.replaceChildren()
 
 
-//     // Carrega os Pokémon em lotes de 'limite' unidades
-//     for (let i = 0; i < dados.results.length; i += limite) {
-//         const lote = dados.results.slice(i, i + limite)
+    // Carrega os Pokémon em lotes de 'limite' unidades
+    for (let i = 0; i < dados.results.length; i += limite) {
+        const lote = dados.results.slice(i, i + limite)
 
-//         const promises = lote.map(p => fetch(p.url).then(resp => resp.json()))
-//         const pokemons = await Promise.all(promises)
+        const promises = lote.map(p => fetch(p.url).then(resp => resp.json()))
+        const pokemons = await Promise.all(promises)
 
-//         const dadosFinais = pokemons.map(info => ({
-//             id: info.id,
-//             nome: info.name,
-//             imagem: info.sprites.front_default,
-//             tipos: info.types.map(t => t.type.name)
-//         }))
+        const dadosFinais = pokemons.map(info => ({
+            id: info.id,
+            nome: info.name,
+            imagem: info.sprites.front_default,
+            tipos: info.types.map(t => t.type.name)
+        }))
 
-//         //... pra mesclar arrays, mantendo a estrutura de listaPokemon
-//         listaPokemon.push(...dadosFinais)
-//         mostrarPokemons(listaPokemon)
-//     }
-// }
+        //... pra mesclar arrays, mantendo a estrutura de listaPokemon
+        listaPokemon.push(...dadosFinais)
+        mostrarPokemons(listaPokemon)
+    }
+}
 
 
 //Primeira Versão
