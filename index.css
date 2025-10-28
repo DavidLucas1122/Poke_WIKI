@@ -14,6 +14,11 @@ a {
     color: inherit;
 }
 
+body {
+    width: 100vw;
+    height: 100vh;
+}
+
 /* Header */
 header {
     width: 100%;
@@ -126,24 +131,25 @@ main .hero {
     gap: 5%;
 }
 
-main .apresentation{
+main .apresentation {
     display: flex;
     flex-direction: column;
     width: 100%;
-    height: 180px;
     border: 1px solid black;
 }
-main .apresentation h2{
+
+main .apresentation h2 {
     background-color: #212121;
     color: white;
     padding: 10px;
     font-family: 'Inter';
     font-size: 1.4rem;
 }
-main .apresentation p{
+
+main .apresentation p {
     display: flex;
     align-items: center;
-    height: 180px;
+    height: 140px;
     background-color: #d9d9d9;
     font-size: 15px;
     line-height: 1.5;
@@ -153,7 +159,7 @@ main .apresentation p{
 }
 
 /* Footer */
-footer{
+footer {
     width: 100%;
     height: 80px;
     display: flex;
@@ -164,84 +170,177 @@ footer{
     font-family: 'Inter';
     font-weight: bold;
 
-    p{
+    p {
         padding: 30px;
     }
 }
 
+
+/* 1200px */
 @media (max-width: 1200px) {
-    main{
+    main {
         padding-right: 50px;
     }
+
     main .text h2 {
         font-size: 5rem;
-        color: #85629F;
-        font-family: 'Inter';
     }
 
-    
     main .text p {
-        font-family: 'Inter';
-        font-weight: bold;
         font-size: 1.2rem;
     }
-    
+
     main img {
         height: 18rem;
         width: 22rem;
     }
-
-    main .hero {
-        display: flex;
-        align-items: center;
-        gap: 10%;
-    }
 }
 
+/* 880px */
 @media (max-width: 880px) {
-
     main {
-        width: 100%;
-        height: 100%;
-        display: flex;
-        flex-direction: column;
-        padding-top: 50px;
-        gap: 40px;
-        padding-left: 40px;
-        padding-right: 40px;
-        padding-bottom: 100px;
+        padding: 50px 40px 100px;
     }
+
     main .text h2 {
         font-size: 4rem;
-        color: #85629F;
-        font-family: 'Inter';
     }
 
     main img {
         height: 12rem;
         width: 18rem;
     }
-    
+
     main .text p {
-        font-family: 'Inter';
-        font-weight: bold;
         font-size: 1rem;
     }
-    
-    main .hero {
-        display: flex;
-        align-items: center;
+
+    main .apresentation p {
+        font-size: 0.8rem;
+    }
+}
+
+/* 620px */
+@media (max-width: 620px) {
+    header .header-top {
+        justify-content: center;
+        padding: 0;
+    }
+
+    header .header-brand {
+        font-size: 1.5rem;
         gap: 10px;
     }
-    main .apresentation p{
-        display: flex;
+
+    header .bola {
+        display: none;
+    }
+
+    header nav {
+        justify-content: center;
+        padding: 0;
+    }
+
+    main .hero {
+        flex-direction: column;
+        text-align: center;
+        gap: 20px;
+    }
+
+    main img {
+        height: 150px;
+        width: 150px;
+    }
+    main .text{
         align-items: center;
-        height: 180px;
+    }
+
+    main .text h2 {
+        font-size: 3rem;
+    }
+    main .apresentation {
         background-color: #d9d9d9;
+        display: flex;
+        flex-direction: column;
+    }
+
+    main .apresentation h2 {
+        font-size: 1rem;
+        text-align: center;
+        color: white;
+    }
+
+    main .apresentation p {
+        font-size: 0.75rem;
+        text-align: justify;
+        background-color: transparent;
+        line-height: 1.4;
+        height: auto;
+    }
+}
+
+/* 480px — Último breakpoint */
+@media (max-width: 480px) {
+    header {
+        height: auto;
+    }
+
+    .header-brand img {
+        height: 65px;
+        width: 65px;
+    }
+
+    main {
+        padding: 30px 20px 60px;
+        gap: 30px;
+    }
+    main .text{
+        align-items: center;
+    }
+
+    main .text h2 {
+        font-size: 2.5rem;
+    }
+
+    main .text p {
+        font-size: 0.9rem;
+    }
+
+    main button {
+        width: 120px;
+        height: 35px;
+        font-size: 0.9rem;
+    }
+
+    main img {
+        height: 200px;
+        width: 200px;
+    }
+
+    main .apresentation {
+        background-color: #d9d9d9;
+        display: flex;
+        flex-direction: column;
+    }
+
+    main .apresentation h2 {
+        font-size: 1rem;
+        text-align: center;
+        color: white;
+    }
+
+    main .apresentation p {
+        font-size: 0.75rem;
+        text-align: justify;
+        background-color: transparent;
+        line-height: 1.4;
+        height: auto;
+    }
+
+
+    footer{
         font-size: 0.8rem;
-        line-height: 1.5;
-        padding-left: 10px;
-        font-family: 'Inter';
-        font-weight: bold;
+        text-align: center;
+        padding: 10px;
     }
 }
