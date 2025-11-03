@@ -16,7 +16,8 @@ a {
 
 body {
     width: 100vw;
-    height: 100vh;
+    height: 80vh;
+    font-family: 'Inter';
 }
 
 /* Header */
@@ -26,7 +27,6 @@ header {
     background-color: #85629F;
     display: flex;
     flex-direction: column;
-    font-family: "Inter";
 }
 
 header img {
@@ -87,7 +87,7 @@ main {
     gap: 40px;
     padding-left: 80px;
     padding-right: 80px;
-    padding-bottom: 100px;
+    padding-bottom: 10px;
 }
 
 main .text {
@@ -136,6 +136,7 @@ main .apresentation {
     flex-direction: column;
     width: 100%;
     border: 1px solid black;
+    background-color: #d9d9d9;
 }
 
 main .apresentation h2 {
@@ -149,8 +150,8 @@ main .apresentation h2 {
 main .apresentation p {
     display: flex;
     align-items: center;
+    margin: 10px;
     height: 140px;
-    background-color: #d9d9d9;
     font-size: 15px;
     line-height: 1.5;
     padding-left: 10px;

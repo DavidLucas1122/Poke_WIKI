@@ -28,6 +28,7 @@ body {
     display: flex;
     flex-direction: column;
     font-family: 'Inter';
+    overflow-x: auto;
 }
 
 /* Header */
@@ -410,7 +411,7 @@ main .stats{
     }
     
     main .div_descricao .desc{
-        width: 22rem;
+        width: 100%;
         overflow-wrap: break-word;
         padding-bottom: 10px;
         padding-right: 10px;
@@ -579,12 +580,6 @@ main .stats{
         height: auto;
         padding: 10px;
         font-size: 0.8rem;
-    }
-
-    main .div_descricao .desc {
-        font-size: 0.75rem;
-        line-height: 1.4;
-        padding-bottom: 5px;
     }
 
     main .peso_alt {
