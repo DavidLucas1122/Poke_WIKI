@@ -279,6 +279,7 @@ async function sugestoesBarra() {
 // Mostrar Pokemons
 function mostrarPokemons(lista) {
     container.replaceChildren()
+    container.innerHTML = ""
 
     lista.forEach(pokemon => {
         const link = document.createElement('a')
