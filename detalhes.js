@@ -4,6 +4,7 @@
 window.addEventListener('DOMContentLoaded', async () => {
     const params = new URLSearchParams(window.location.search)
     const nome = params.get('nome')
+    console.log(nome)
     if (nome) await carregarInfos(nome)
 })
 
@@ -31,7 +32,7 @@ async function carregarInfos(nomeId) {
     console.log(info)
 
     //Outro Fetch, pois as infos que preciso então dentros de outra url
-    const speciesResp = await fetch(`https://pokeapi.co/api/v2/pokemon-species/${info.id}`)
+    const speciesResp = await fetch(info.species.url) 
     const speciesData = await speciesResp.json()
     console.log(speciesData)
 

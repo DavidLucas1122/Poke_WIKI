@@ -220,7 +220,13 @@ async function sugestoesBarra() {
     listaSugestoes.classList.add('sugestoes')
     input.parentNode.appendChild(listaSugestoes)
     const select = document.getElementById('filtro')
-    const response = await fetch(`https://pokeapi.co/api/v2/pokemon/?limit=1025`)
+
+    //Fazer verificação de pokemons total para possibilitar a pesquisa de qualquer pokemon da API
+    const resp = await fetch('https://pokeapi.co/api/v2/pokemon')
+    const data = await resp.json()
+    const total = data.count // número total de pokémons existentes na API
+
+    const response = await fetch(`https://pokeapi.co/api/v2/pokemon/?limit=${total}`)
     const dados = await response.json()
     const pokemons = dados.results.map(p => p.name)
 
@@ -278,7 +284,7 @@ function mostrarPokemons(lista) {
         const link = document.createElement('a')
         const card = document.createElement('div')
 
-        link.href = `detalhes.html?nome=${pokemon.nome.toLowerCase()}`
+        link.href = `detalhes.html?nome=${pokemon.nome}`
         card.classList.add('poke')
 
         // imagem com lazy loading
